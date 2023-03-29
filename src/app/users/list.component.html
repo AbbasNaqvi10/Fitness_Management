@@ -1,0 +1,47 @@
+﻿<h1>Members</h1>
+<a routerLink="/" class="btn btn-sm btn-success mb-2">Add User</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 10%">ID</th>
+            <th style="width: 10%">Full Name</th>
+            <th style="width: 10%">DOB</th>
+            <th style="width: 5%">Gender</th>
+            <th style="width: 5%">Membership</th>
+            <th style="width: 5%">Start Day</th>
+            <th style="width: 5%">Contact</th>
+            <th style="width: 10%">Email</th>
+            <th style="width: 10%">Address</th>
+            <th style="width: 10%">Emergency Contact</th>
+            <th style="width: 10%">Medical</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.memberId}}</td>
+            <td>{{user.fullName}}</td>
+            <td>{{user.dateOfBirth}}</td>
+            <td>{{user.gender}}</td>
+            <td>{{user.membershipType}}</td>
+            <td>{{user.membershipStartDay}}</td>
+            <td>{{user.contactNo}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.residentialAddress}}</td>
+            <td>{{user.emergencyContactNumber}}</td>
+            <td>{{user.medicalConsition}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{user.memberId}}" class="btn btn-sm btn-primary me-1">Edit</a>
+                <button (click)="deleteUser(user.memberId)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
+                    <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!user.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!users">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
