@@ -9,8 +9,8 @@ const accountModule = () => import('./account/account.module').then(x => x.Accou
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
 
 const routes: Routes = [
-    { path: '', component:RegisterComponent },
-    { path: 'home', component: HomeComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: '', component: HomeComponent },
     { path: 'users', loadChildren: usersModule, },
 
     { path: '**', redirectTo: '' }

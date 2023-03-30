@@ -2,10 +2,15 @@
 import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_services';
+import { User } from '@app/_models';
 
+
+interface ExtendedUser extends User {
+    isDeleting?: boolean;
+}
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
-    users?: any[];
+    users?: ExtendedUser[];
 
     constructor(private accountService: AccountService) {}
 
@@ -15,11 +20,10 @@ export class ListComponent implements OnInit {
             .subscribe(users => this.users = users);
     }
 
-    deleteUser(id: string) {
-        const user = this.users!.find(x => x.id === id);
-        user.isDeleting = true;
-        this.accountService.delete(id)
+    deleteUser(memberId: string) {
+        const user = this.users!.find(x => x.memberId === memberId);
+        this.accountService.delete(memberId)
             .pipe(first())
-            .subscribe(() => this.users = this.users!.filter(x => x.id !== id));
+            .subscribe(() => this.ngOnInit());
     }
 }

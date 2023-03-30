@@ -8,8 +8,7 @@ import { AccountService, AlertService } from '@app/_services';
 @Component({ templateUrl: 'edit.component.html' })
 export class EditComponent implements OnInit {
     form!: FormGroup;
-    id?: string;
-    title!: string;
+    id!: string;
     loading = false;
     submitting = false;
     submitted = false;
@@ -24,31 +23,23 @@ export class EditComponent implements OnInit {
 
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
-
-        // form with validation rules
-        this.form = this.formBuilder.group({
-            fullName: ['', Validators.required],
-            dateOfBirth: ['', Validators.required],
-            gender: ['', Validators.required],
-            membershipType: ['', Validators.required],
-            membershipStartDay: ['', Validators.required],
-            contactNo: ['', Validators.required],
-            email: ['', Validators.required],
-            residentialAddress: ['', Validators.required],
-            emergencyContactNumber: ['', [Validators.required]],
-            medicalCondition: [''],
-        });
-
-        this.title = 'Edit Member';
-        if (this.id) {
-            this.loading = true;
-            this.accountService.getById(this.id)
-                .pipe(first())
-                .subscribe(x => {
-                    this.form.patchValue(x);
-                    this.loading = false;
+        this.accountService.getById(this.id)
+            .pipe(first())
+            .subscribe(member => {
+                // form with validation rules
+                this.form = this.formBuilder.group({
+                    fullname: [member.fullname, Validators.required],
+                    dateOfBirth: [member.dateOfBirth, Validators.required],
+                    gender: [member.gender, Validators.required],
+                    membershipType: [member.membershipType, Validators.required],
+                    membershipStartDay: [member.membershipStartDay, Validators.required],
+                    contact: [member.contact, Validators.required],
+                    email: [member.email, Validators.required],
+                    residentialAddress: [member.residentialAddress, Validators.required],
+                    emergencyContact: [member.emergencyContact, [Validators.required]],
+                    medical: [member.medical],
                 });
-        }
+            });
     }
 
     // convenience getter for easy access to form fields
@@ -66,7 +57,7 @@ export class EditComponent implements OnInit {
         }
 
         this.submitting = true;
-        this.saveUser()
+        this.accountService.update(this.id!, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -78,12 +69,5 @@ export class EditComponent implements OnInit {
                     this.submitting = false;
                 }
             })
-    }
-
-    private saveUser() {
-        // create or update user based on id param
-        return this.id
-            ? this.accountService.update(this.id!, this.form.value)
-            : this.accountService.register(this.form.value);
     }
 }
