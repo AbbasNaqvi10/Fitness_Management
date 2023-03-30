@@ -2,10 +2,11 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
+import { User } from '@app/_models';
 
 // array in local storage for registered users
 const usersKey = 'members';
-let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
+let users: User[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -20,11 +21,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return register();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
-                case url.match(/\/users\/\d+$/) && method === 'GET':
+                case url.match(/\/users\/\w+$/) && method === 'GET':
                     return getUserById();
-                case url.match(/\/users\/\d+$/) && method === 'PUT':
+                case url.match(/\/users\/\w+$/) && method === 'PUT':
                     return updateUser();
-                case url.match(/\/users\/\d+$/) && method === 'DELETE':
+                case url.match(/\/users\/\w+$/) && method === 'DELETE':
                     return deleteUser();
                 default:
                     // pass through any requests not handled above
@@ -53,7 +54,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getUserById() {
-
             const user = users.find(x => x.memberId === idFromUrl());
             return ok(user);
         }
@@ -69,7 +69,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             // update and save user
-            Object.assign(user, params);
+            Object.assign(<any>user, params);
             localStorage.setItem(usersKey, JSON.stringify(users));
 
             return ok();
@@ -96,7 +96,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function idFromUrl() {
             const urlParts = url.split('/');
-            return parseInt(urlParts[urlParts.length - 1]);
+            return urlParts[urlParts.length - 1];
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<h1>Members</h1>
-<a routerLink="/" class="btn btn-sm btn-success mb-2">Add User</a>
+<a routerLink="/register" class="btn btn-sm btn-success mb-2">Add User</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -20,18 +20,18 @@
     <tbody>
         <tr *ngFor="let user of users">
             <td>{{user.memberId}}</td>
-            <td>{{user.fullName}}</td>
+            <td>{{user.fullname}}</td>
             <td>{{user.dateOfBirth}}</td>
             <td>{{user.gender}}</td>
             <td>{{user.membershipType}}</td>
             <td>{{user.membershipStartDay}}</td>
-            <td>{{user.contactNo}}</td>
+            <td>{{user.contact}}</td>
             <td>{{user.email}}</td>
             <td>{{user.residentialAddress}}</td>
-            <td>{{user.emergencyContactNumber}}</td>
-            <td>{{user.medicalConsition}}</td>
+            <td>{{user.emergencyContact}}</td>
+            <td>{{user.medical}}</td>
             <td style="white-space: nowrap">
-                <a routerLink="edit/{{user.memberId}}" class="btn btn-sm btn-primary me-1">Edit</a>
+                <a [routerLink]="['edit', user.memberId]" class="btn btn-sm btn-primary me-1">Edit</a>
                 <button (click)="deleteUser(user.memberId)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
                     <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
                     <span *ngIf="!user.isDeleting">Delete</span>

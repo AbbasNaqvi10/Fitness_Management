@@ -12,10 +12,10 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Full Name</label>
-                <input type="text" formControlName="fullName" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }" />
-                <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
-                    <div *ngIf="f.fullName.errors.required">Full Name is required</div>
+                <input type="text" formControlName="fullname" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" />
+                <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+                    <div *ngIf="f.fullname.errors.required">Full Name is required</div>
                 </div>
             </div>
             <div class="mb-3">
@@ -62,10 +62,10 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Contact No.</label>
-                <input type="number" formControlName="contactNo" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }" />
-                <div *ngIf="submitted && f.contactNo.errors" class="invalid-feedback">
-                    <div *ngIf="f.contactNo.errors.required">First Name is required</div>
+                <input type="number" formControlName="contact" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.contact.errors }" />
+                <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                    <div *ngIf="f.contact.errors.required">First Name is required</div>
                 </div>
             </div>
             <div class="mb-3">
@@ -86,18 +86,15 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Emergency Contact No.</label>
-                <input type="number" formControlName="emergencyContactNumber" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.emergencyContactNumber.errors }" />
-                <div *ngIf="submitted && f.emergencyContactNumber.errors" class="invalid-feedback">
-                    <div *ngIf="f.emergencyContactNumber.errors.required">Emergency Contact No is required</div>
+                <input type="number" formControlName="emergencyContact" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.emergencyContact.errors }" />
+                <div *ngIf="submitted && f.emergencyContact.errors" class="invalid-feedback">
+                    <div *ngIf="f.emergencyContact.errors.required">Emergency Contact No is required</div>
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Medical Condition</label>
-                <input type="text"  class="form-control"/>
-                <!-- <div *ngIf="submitted && f.medicalConsition.errors" class="invalid-feedback">
-                    <div *ngIf="f.medicalConsition.errors.required">Medical Condition No is required</div>
-                </div> -->
+                <input type="text" formControlName="medical" class="form-control"/>
             </div>
             <div>
                 <button [disabled]="loading" class="btn btn-primary">
